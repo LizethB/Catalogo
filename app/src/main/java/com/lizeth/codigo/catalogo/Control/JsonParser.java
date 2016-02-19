@@ -1,4 +1,4 @@
-package com.lizeth.codigo.catalogo;
+package com.lizeth.codigo.catalogo.Control;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 
 public class JsonParser {
+
     static String response = null;
     public final static int GET = 1;
     public final static int POST = 2;
@@ -29,9 +30,9 @@ public class JsonParser {
         return this.makeServiceCall(url, method, null);
     }
     //METODO PARA ESTABLECER CONEXIÓN
-    public String makeServiceCall(String url, int method,List<namevaluepair> params) {
+    public String makeServiceCall(String url, int method,List<NameValuePair> params) {
         try {
-            //HTTP CLIENT
+
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpEntity httpEntity = null;
             HttpResponse httpResponse = null;
@@ -43,7 +44,9 @@ public class JsonParser {
                 if (params != null) {
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
                 }
+
                 httpResponse = httpClient.execute(httpPost);
+
             } else if (method == GET) {
                 // AÑADIMOS PARAMETROS AL METODO GET
                 if (params != null) {
@@ -57,7 +60,7 @@ public class JsonParser {
             }
             httpEntity = httpResponse.getEntity();
             response = EntityUtils.toString(httpEntity);
-            //EXCEPCIONES
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -65,7 +68,8 @@ public class JsonParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //DEVOLVEMOS RESPUESTA
+
         return response;
+
     }
 }
